@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), 'gilded_rose')
+
 AGED_BRIE = 1
 SULFURAS = 2
 BACKSTAGE_PASSES = 3
@@ -8,7 +9,7 @@ describe GildedRose do
 	let(:items) { [
 		Item.new('foo', 10, 11),
 		Item.new('Aged Brie', 11, 10),
-		Item.new('Sulfuras, Hand of Ragnaros', 1, 100),
+		Item.new('Sulfuras, Hand of Ragnaros', 1, 80),
 		Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 30),
 		] 
 		}
@@ -59,7 +60,7 @@ describe GildedRose do
 
 		it ' check that Sulfuras legendary never has to be sold or decreases in quality' do
 			update_quality
-			expect(items[SULFURAS].quality).to eq 100
+			expect(items[SULFURAS].quality).to eq 80 
 			expect(items[SULFURAS].sell_in).to eq 1 
 		end
 
@@ -80,7 +81,11 @@ describe GildedRose do
 			expect(items[BACKSTAGE_PASSES].quality).to eq 44
 		end
 
-		it 'check that backstage passes quality drops to 0 after the concert' 
+		it 'check that backstage passes quality drops to 0 after the concert'  do
+			12.times{ update_quality }
+			expect(items[BACKSTAGE_PASSES].quality).to eq 0
+		end
+
 		it 'check that conjured items degrade in quality twice as fast as normal items'
 	end
 end
