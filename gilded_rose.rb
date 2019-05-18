@@ -30,21 +30,31 @@ class GildedRose
 		end
 
 		def update_item_quality(item)
-      if !is_it_aged_brie?(item) and !is_it_backstage_passes?(item) 
-        if item.quality > 0
-						item.quality = item.quality - 1
-        end
+      if is_it_obsolescent_item?(item)
+				decrease_quality(item)
       else
         if item.quality < MAX_QUALITY 
           item.quality = item.quality + 1
+
           if is_it_backstage_passes?(item)
-						update_backstage_passes(item)
+						update_backstage_passes_quality(item)
           end
         end
       end
 		end
 
-		def update_backstage_passes(item)
+		def is_it_obsolescent_item?(item)
+			!is_it_aged_brie?(item) and !is_it_backstage_passes?(item) 
+		end
+
+
+		def decrease_quality(item)
+			if item.quality > 0
+					item.quality = item.quality - 1
+			end
+		end
+
+		def update_backstage_passes_quality(item)
 			if item.sell_in < 11
 				if item.quality < MAX_QUALITY  
 					item.quality = item.quality + 1
@@ -58,6 +68,7 @@ class GildedRose
 		end
 
 		def update_item_sell_in(item)
+			#sell_in - number of days have to sell the item
 			item.sell_in = item.sell_in - 1
       if item.sell_in < 0
         if  !is_it_aged_brie?(item)
@@ -78,7 +89,6 @@ class GildedRose
 end
 
 class Item
-  #sell_in - number of days have to sell the item
   attr_accessor :name, :sell_in, :quality
 
   def initialize(name, sell_in, quality)
