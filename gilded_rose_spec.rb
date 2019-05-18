@@ -22,7 +22,12 @@ describe GildedRose do
 			expect(items[0].quality).to eq 10
 		end
 
-		it 'at end of sell_in lowers quality twice as fast'
+		it 'at end of sell_in lowers quality twice as fast' do
+			items[0].sell_in = 0
+			update_quality
+			expect(items[0].quality).to eq 8
+		end
+
 		it 'can not change quality to negative'
 		it 'increase quality of Aged Brie instead lowering'
 		it 'check that quality never more than 50'
