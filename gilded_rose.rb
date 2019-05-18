@@ -33,13 +33,11 @@ class GildedRose
       if is_it_obsolescent_item?(item)
 				decrease_quality(item)
       else
-        if item.quality < MAX_QUALITY 
-          item.quality = item.quality + 1
+				increase_quality(item)
 
-          if is_it_backstage_passes?(item)
-						update_backstage_passes_quality(item)
-          end
-        end
+				if is_it_backstage_passes?(item)
+					update_backstage_passes_quality(item)
+				end
       end
 		end
 
@@ -47,6 +45,11 @@ class GildedRose
 			!is_it_aged_brie?(item) and !is_it_backstage_passes?(item) 
 		end
 
+		def increase_quality(item)
+			if item.quality < MAX_QUALITY 
+				item.quality = item.quality + 1
+			end
+		end
 
 		def decrease_quality(item)
 			if item.quality > 0
@@ -55,15 +58,11 @@ class GildedRose
 		end
 
 		def update_backstage_passes_quality(item)
-			if item.sell_in < 11
-				if item.quality < MAX_QUALITY  
-					item.quality = item.quality + 1
-				end
+			if item.sell_in < 11 #days
+				increase_quality(item)
 			end
-			if item.sell_in < 6
-				if item.quality < MAX_QUALITY 
-					item.quality = item.quality + 1
-				end
+			if item.sell_in < 6 #days 
+				increase_quality(item)
 			end
 		end
 
