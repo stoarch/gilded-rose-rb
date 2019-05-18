@@ -9,6 +9,25 @@ class GildedRose
     @items.each do |item|
 			next if is_it_sulfuras?(item)
 
+			update_item_quality(item)
+			update_item_sell_in(item)
+    end
+  end
+
+	private
+		def is_it_aged_brie?(item)
+			item.name == 'Aged Brie'
+		end
+
+		def is_it_backstage_passes?(item)
+			item.name == 'Backstage passes to a TAFKAL80ETC concert'
+		end
+
+		def is_it_sulfuras?(item)
+			item.name == 'Sulfuras, Hand of Ragnaros'
+		end
+
+		def update_item_quality(item)
       if !is_it_aged_brie?(item) and !is_it_backstage_passes?(item) 
         if item.quality > 0
 						item.quality = item.quality - 1
@@ -30,6 +49,9 @@ class GildedRose
           end
         end
       end
+		end
+
+		def update_item_sell_in(item)
 			item.sell_in = item.sell_in - 1
       if item.sell_in < 0
         if  !is_it_aged_brie?(item)
@@ -46,20 +68,6 @@ class GildedRose
           end
         end
       end
-    end
-  end
-
-	private
-		def is_it_aged_brie?(item)
-			item.name == 'Aged Brie'
-		end
-
-		def is_it_backstage_passes?(item)
-			item.name == 'Backstage passes to a TAFKAL80ETC concert'
-		end
-
-		def is_it_sulfuras?(item)
-			item.name == 'Sulfuras, Hand of Ragnaros'
 		end
 end
 
