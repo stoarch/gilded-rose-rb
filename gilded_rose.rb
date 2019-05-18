@@ -69,19 +69,16 @@ class GildedRose
 		def update_item_sell_in(item)
 			#sell_in - number of days have to sell the item
 			item.sell_in = item.sell_in - 1
+
       if item.sell_in < 0
-        if  !is_it_aged_brie?(item)
+        if !is_it_aged_brie?(item)
 					if !is_it_backstage_passes?(item)
-						if item.quality > 0
-                item.quality = item.quality - 1
-            end
+						decrease_quality(item)
           else
             item.quality = 0 
           end
         else
-          if item.quality < MAX_QUALITY 
-            item.quality = item.quality + 1
-          end
+					increase_quality(item)
         end
       end
 		end
