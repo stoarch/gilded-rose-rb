@@ -16,7 +16,7 @@ class ItemProcessor
 
 	protected
 		def update_quality
-			decrease_quality
+			#do nothing - redefined in child classes
 		end
 
 		def update_sell_in
@@ -64,7 +64,7 @@ end
 class AgedItemProcessor < ItemProcessor
 	def update_sell_in
 		super
-		increase_quality
+		increase_quality if item.sell_in < 0
 	end
 
 	def update_quality
@@ -91,7 +91,7 @@ end
 class ConjuredItemProcessor < ObsolescentItemProcessor
 	def update_quality
 		super
-		#decrease_quality
+		decrease_quality # twice
 	end
 end
 
@@ -132,7 +132,7 @@ class GildedRose
 		end
 
 		def get_default_processor(item)
-			ItemProcessor.new(item)
+			ObsolescentItemProcessor.new(item)
 		end
 
 		def get_aged_processor(item)
