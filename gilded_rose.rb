@@ -64,7 +64,7 @@ end
 class AgedItemProcessor < ItemProcessor
 	def update_sell_in
 		super
-		increase_quality if item.sell_in < 0
+		increase_quality if item.sell_in < 0 # aged twice update quality
 	end
 
 	def update_quality
@@ -77,7 +77,7 @@ class BackstagePassItemProcessor < AgedItemProcessor
 	def update_sell_in
 		super
 
-		item.quality = 0 if item.sell_in <= 0
+		item.quality = 0 if item.sell_in <= 0 # backstage passes cost nothing after stage
 	end
 
 	def update_quality
@@ -91,10 +91,11 @@ end
 class ConjuredItemProcessor < ObsolescentItemProcessor
 	def update_quality
 		super
-		decrease_quality # twice
+		decrease_quality # twice as base item
 	end
 end
 
+# Manager for gilded rose inn items
 class GildedRose
 	MAX_QUALITY = 50
 

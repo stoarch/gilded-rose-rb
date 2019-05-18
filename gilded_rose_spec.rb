@@ -93,6 +93,9 @@ describe GildedRose do
 			expect(items[BACKSTAGE_PASSES].quality).to eq 0
 		end
 
-		it 'check that conjured items degrade in quality twice as fast as normal items'
+		it 'check that conjured items degrade in quality twice as fast as normal items' do
+			update_quality
+			expect(items[CONJURED].quality).to eq 9 
+		end
 	end
 end
