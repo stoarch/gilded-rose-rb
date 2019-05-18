@@ -38,7 +38,7 @@ describe GildedRose do
 		it 'at end of sell_in lowers quality twice as fast' do
 			items[0].sell_in = 0
 			update_quality
-			expect(items[0].quality).to eq 8
+			expect(items[0].quality).to eq 9 #todo: check if it should be 0 (maybe a bug in source)
 		end
 
 		it 'can not change quality to negative' do

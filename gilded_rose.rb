@@ -7,12 +7,11 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      if !is_it_aged_brie?(item) and !is_it_backstage_passes?(item) 
+			next if is_it_sulfuras?(item)
 
+      if !is_it_aged_brie?(item) and !is_it_backstage_passes?(item) 
         if item.quality > 0
-          if  !is_it_sulfuras?(item)
 						item.quality = item.quality - 1
-          end
         end
       else
         if item.quality < 50
@@ -31,16 +30,12 @@ class GildedRose
           end
         end
       end
-      if !is_it_sulfuras?(item) 
-        item.sell_in = item.sell_in - 1
-      end
+			item.sell_in = item.sell_in - 1
       if item.sell_in < 0
         if  !is_it_aged_brie?(item)
 					if !is_it_backstage_passes?(item)
 						if item.quality > 0
-              if !is_it_sulfuras?(item) 
-                item.quality = item.quality - 2
-              end
+                item.quality = item.quality - 1
             end
           else
             item.quality = 0 
