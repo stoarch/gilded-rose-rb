@@ -3,14 +3,16 @@ require File.join(File.dirname(__FILE__), 'gilded_rose')
 AGED_BRIE = 1
 SULFURAS = 2
 BACKSTAGE_PASSES = 3
+CONJURED = 4
 
 describe GildedRose do
 
 	let(:items) { [
-		Item.new('foo', 10, 11),
+		Item.new('foo', 10, 11), #sell_in, quality
 		Item.new('Aged Brie', 11, 10),
 		Item.new('Sulfuras, Hand of Ragnaros', 1, 80),
 		Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 30),
+		Item.new('Conjured', 10, 11),
 		] 
 		}
 
@@ -33,6 +35,11 @@ describe GildedRose do
 		it 'at end of day lowers quality' do
 			update_quality
 			expect(items[0].quality).to eq 10
+		end
+
+		it 'conjured items at end of day lowers quality twice' do
+			update_quality
+			expect(items[CONJURED].quality).to eq 9 
 		end
 
 		it 'at end of sell_in lowers quality twice as fast' do

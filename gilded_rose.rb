@@ -29,9 +29,14 @@ class GildedRose
 			item.name == 'Sulfuras, Hand of Ragnaros'
 		end
 
+		def is_it_conjured_item?(item) 
+			item.name == 'Conjured'
+		end
+
 		def update_item_quality(item)
       if is_it_obsolescent_item?(item)
 				decrease_quality(item)
+				decrease_quality(item) if is_it_conjured_item?(item)	
       else
 				increase_quality(item)
 
