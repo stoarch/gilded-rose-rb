@@ -64,7 +64,7 @@ end
 class AgedItemProcessor < ItemProcessor
 	def update_sell_in
 		super
-		increase_quality if item.sell_in < 0 # aged twice update quality
+		increase_quality if item.sell_in < 0 # aged is twice better quality
 	end
 
 	def update_quality
