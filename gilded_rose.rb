@@ -1,6 +1,8 @@
 require 'pry'
 
 class GildedRose
+	MAX_QUALITY = 50
+
   def initialize(items)
     @items = items
   end
@@ -33,22 +35,26 @@ class GildedRose
 						item.quality = item.quality - 1
         end
       else
-        if item.quality < 50
+        if item.quality < MAX_QUALITY 
           item.quality = item.quality + 1
           if is_it_backstage_passes?(item)
-						if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
+						update_backstage_passes(item)
           end
         end
       end
+		end
+
+		def update_backstage_passes(item)
+			if item.sell_in < 11
+				if item.quality < MAX_QUALITY  
+					item.quality = item.quality + 1
+				end
+			end
+			if item.sell_in < 6
+				if item.quality < MAX_QUALITY 
+					item.quality = item.quality + 1
+				end
+			end
 		end
 
 		def update_item_sell_in(item)
@@ -63,7 +69,7 @@ class GildedRose
             item.quality = 0 
           end
         else
-          if item.quality < 50
+          if item.quality < MAX_QUALITY 
             item.quality = item.quality + 1
           end
         end
